@@ -2,10 +2,7 @@ const User = require("../models/user")
 
 module.exports = class UserInfoController {
     constructor() {}
-/**
- * @param {import('express').Request} req 
- * @param {import('express').Response} res 
- */
+
     static async createUser(req, res)
     {   
         try {
