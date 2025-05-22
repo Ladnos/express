@@ -1,9 +1,11 @@
-const User = require("../models/user")
+import { Request, Response } from "express"
 
-module.exports = class UserInfoController {
+import User from "../models/user"
+
+export default class UserInfoController {
     constructor() {}
 
-    static async createUser(req, res)
+    static async createUser(req: Request, res: Response)
     {   
         try {
             let newUser =  await User.create({
@@ -11,40 +13,29 @@ module.exports = class UserInfoController {
                 'password': req.body.password
             })
         } catch (error) {           
-            return res.status(500).json(error.errors)
         }
         return res.status(200).json({
             "message" : "user created successfuly"
         })
     }
-/**
- * @param {import('express').Request} req 
- * @param {import('express').Response} res 
- */
-    static async getUserInfo (req, res)
+    static async getUserInfo (req: Request, res: Response)
     {        
         if (req.params.id) {
             let id = req.params.id
             let user = await User.findByPk(id,);
             return res.status(200).json(user);
         } else {
-            return res.status(204).errored()
         }
     }
-/**
- * @param {import('express').Request} req 
- * @param {import('express').Response} res 
- */
-    static async updateUserInfo(req, res)
+    static async updateUserInfo(req: Request, res: Response)
     {
-        console.log(res);
-        
-        if (!req.body.id) {
-
+        let {body} = req
+            res.json(body)
+        if (!body.id) {
             return res.json
         }
         try {
-            
+        
         } catch (error) {
             
         }

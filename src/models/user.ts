@@ -1,7 +1,7 @@
 "use strict";
-const bcrypt = require('bcrypt');
-const { Sequelize, DataTypes, Model } = require('sequelize');
-const sequelize = require('../database.js')
+import bcrypt from 'bcrypt-ts';
+import { Sequelize, DataTypes, Model } from 'sequelize';
+import sequelize from '../../database';
 
 class User extends Model {
   /**
@@ -13,7 +13,7 @@ class User extends Model {
   {
     
   }
-  static associate(models) {
+  static associate(models: Model[]) {
     // define association here
   }
 }
@@ -27,7 +27,7 @@ User.init(
     password: {
       type: DataTypes.STRING,
       allowNull: false,
-      set(value) {
+      set(value: string) {
         const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(value, salt);
 
@@ -46,4 +46,4 @@ User.init(
     tableName: 'users',
   }
 );
-module.exports = User
+export default User

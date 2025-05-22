@@ -1,9 +1,9 @@
-const express = require('express')
+import express from 'express';
 const app = express()
 const env = require('dotenv').config();
-const db = require('./models/index.js');
-const colors = require('colors');
-const api = require('./routes/api')
+import testDbConnection from './src/models/index';
+import colors from 'colors';
+import api from './src/routes/api';
 
 
 app.use(express.json())
@@ -15,7 +15,7 @@ let test = app.listen(process.env.PORT, async () => {
   console.log(colors.bgGreen(`Example app listening on port ${process.env.PORT}`))
 })
 
-let dbConnection = db.testDbConnection()
+let dbConnection = testDbConnection.testDbConnection()
 
 if (!dbConnection) {
   test.close()

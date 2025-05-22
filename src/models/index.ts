@@ -1,15 +1,14 @@
 'use strict';
 
-const fs = require('fs');
-const path = require('path');
-const Sequelize = require('sequelize');
-const sequelize = require('../database.js');
-const process = require('process');
+import fs from 'fs';
+import path from 'path';
+import Sequelize from 'sequelize';
+import sequelize from '../../database';
+import process from 'process';
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/config.js')[env];
-const colors = require('colors');
-const db = {};
+import colors from 'colors';
+const db: any = {};
 
 
 fs
@@ -46,4 +45,4 @@ db.testDbConnection = async  () => {
   }
 }
 
-module.exports = db;
+export default db;
