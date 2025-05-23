@@ -1,8 +1,7 @@
 import { Sequelize } from "sequelize";
 
-// const config = require(__dirname + '/config/config.js')[env];
 import config from './src/config/config'
-type Environment = 'development' | 'test' | 'production'; // добавьте нужные среды
+type Environment = 'development' | 'test' | 'production'; 
 
 const env = (process.env.NODE_ENV as Environment) || 'development';
 
