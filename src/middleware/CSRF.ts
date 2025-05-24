@@ -8,7 +8,7 @@ export default class CSRF {
             httpOnly: true,
             secure: false,
             sameSite: "lax",
-            maxAge: 1000 * 60 * 24,
+            maxAge: 1000 * 60 * 60 * 24,
         });
         res.locals.csrfToken = token;
         next();

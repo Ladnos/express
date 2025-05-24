@@ -24,7 +24,7 @@ export default class UserInfoController {
         if (req.params.id) {
             let id = req.params.id
             let user = await User.findByPk(id);
-            let auth = new Authintication(user)
+            let auth = new Authintication()
             return res.status(200).json(user);
         } else {
         }
