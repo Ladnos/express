@@ -9,27 +9,25 @@ interface express {
     res: Response
 }
 
-class Authentication extends CSRF {
+class Authentication {
 
-    async checkPass(user: User, password: string): Promise<boolean> {
+    static async checkPass(user: User, password: string): Promise<boolean> {
         const isMatch: boolean = await compare(password, user.getDataValue('password'));
         return isMatch;
     }
 
-    private async auth(user: User, password: string, express: express, rememberMe?: boolean): Promise<boolean> {
+    static async auth(user: User, password: string, express: express): Promise<boolean> {
         if (await this.checkPass(user, password)) {
-            if (express && rememberMe) {
-                await this.authWithRemember(user, express);
-            }
-            express.req.session.userId = user.getDataValue('id');
+            await this.authWithRemember(user, express);
             express.res.json({ message: "Авторизация успешна", session: express.req.sessionID });
             return true;
         } else {
+            express.res.status(401).json({"error": "Неправильный логин или пароль"})
             return false;
         }
     }
 // blyaaa ya je api delau
-    private async authWithRemember(user: User, express: express): Promise<void> {
+    static async authWithRemember(user: User, express: express): Promise<void> {
         const rememberToken = crypto.randomBytes(32).toString('hex');
         await user.update({ "remember_token": rememberToken });
         express.res.cookie('rememberToken', rememberToken, { maxAge: 30 * 24 * 60 * 60 * 1000 });
