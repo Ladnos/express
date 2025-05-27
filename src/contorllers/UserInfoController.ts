@@ -3,7 +3,6 @@ import crypto from 'crypto';
 
 import User from "../models/user"
 import Authintication from "../helpers/Authintication"
-import OAuthToken from '../models/oauth_token';
 
 export default class UserInfoController {
     constructor() {}
@@ -56,12 +55,7 @@ export default class UserInfoController {
             const expiresAt = new Date(Date.now() + 60 * 60 * 1000); // 1 час
 
             // Сохраняем токены в БД
-            await OAuthToken.create({
-                userId: user.getDataValue('id'),
-                accessToken,
-                refreshToken,
-                expiresAt
-            });
+
 
             res.json({
                 access_token: accessToken,

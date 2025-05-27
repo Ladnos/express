@@ -13,7 +13,6 @@ const SequelizeStore = sequileStore(session.Store);
 
 app.use(express.json())
 app.disable("x-powered-by")
-app.use('/api', api)
 let sessionDb =new SequelizeStore({
       db: sequelize,
 })
@@ -22,9 +21,16 @@ app.use(
     secret: process.env.SECRET_SESSION ?? "tesadtsdtsgsfhsvh",
     store: sessionDb,
     resave: false, // we support the touch method so per the express-session docs this should be set to false
-    proxy: true, // if you do SSL outside of node.
+    proxy: false, // if you do SSL outside of node.
+    saveUninitialized: false,
+    cookie: {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: 24 * 60 * 60 * 1000 // 1 день
+    }
   })
 );
+app.use('/api', api)
 sessionDb.sync()
 app.get('/test/test/test', (req, res)=>{
 })
